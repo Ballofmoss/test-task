@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authApi } from "../api/authApi";
+import { authApi } from "../../api/authApi";
 import { Button, TextField, Typography, Box } from "@mui/material";
+
+import styles from "./Register.module.css";
 
 interface RegisterProps {
   onLogin: (user: any) => void;
@@ -12,7 +14,9 @@ const Register: React.FC<RegisterProps> = ({ onLogin }) => {
     username: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
+
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
@@ -39,7 +43,6 @@ const Register: React.FC<RegisterProps> = ({ onLogin }) => {
         password: formData.password,
       });
 
-      // После регистрации сразу логинимся
       const loginResponse = await authApi.login({
         username: formData.username,
         password: formData.password,
@@ -56,21 +59,22 @@ const Register: React.FC<RegisterProps> = ({ onLogin }) => {
   };
 
   return (
-    <Box style={{ maxWidth: "400px", margin: "0 auto", padding: "20px" }}>
-      <Typography variant="h4" gutterBottom>
+    <Box className={styles.registerContainer}>
+      <Typography variant="h4" className={styles.registerTitle}>
         Регистрация
       </Typography>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className={styles.registerForm}>
         <TextField
           name="username"
           label="Имя пользователя"
           fullWidth
           value={formData.username}
           onChange={handleChange}
-          margin="normal"
+          className={styles.formField}
           required
         />
+
         <TextField
           name="email"
           label="Email"
@@ -78,9 +82,10 @@ const Register: React.FC<RegisterProps> = ({ onLogin }) => {
           fullWidth
           value={formData.email}
           onChange={handleChange}
-          margin="normal"
+          className={styles.formField}
           required
         />
+
         <TextField
           name="password"
           label="Пароль"
@@ -88,9 +93,10 @@ const Register: React.FC<RegisterProps> = ({ onLogin }) => {
           fullWidth
           value={formData.password}
           onChange={handleChange}
-          margin="normal"
+          className={styles.formField}
           required
         />
+
         <TextField
           name="confirmPassword"
           label="Подтвердите пароль"
@@ -98,24 +104,32 @@ const Register: React.FC<RegisterProps> = ({ onLogin }) => {
           fullWidth
           value={formData.confirmPassword}
           onChange={handleChange}
-          margin="normal"
+          className={styles.formField}
           required
         />
 
-        {error && <Typography color="error">{error}</Typography>}
+        {error && (
+          <Typography color="error" className={styles.errorMessage}>
+            {error}
+          </Typography>
+        )}
 
         <Button
           type="submit"
           variant="contained"
           color="primary"
           fullWidth
-          style={{ marginTop: "20px" }}
+          className={styles.submitButton}
         >
           Зарегистрироваться
         </Button>
       </form>
 
-      <Button onClick={() => navigate("/login")} style={{ marginTop: "10px" }}>
+      <Button
+        onClick={() => navigate("/login")}
+        className={styles.loginLinkButton}
+        color="inherit"
+      >
         Уже есть аккаунт? Войти
       </Button>
     </Box>

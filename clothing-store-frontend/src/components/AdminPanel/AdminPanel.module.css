@@ -1,0 +1,427 @@
+.adminContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.adminHeader {
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.headerIcon {
+  font-size: 40px;
+  color: var(--primary-color, #1976d2);
+}
+
+.adminTitle {
+  margin: 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.tabsContainer {
+  margin-bottom: 8px;
+}
+
+.messageAlert {
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.adminCard {
+  margin-top: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.cardContent {
+  padding: 24px;
+}
+
+.cardTitle {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+.addProductForm {
+  max-width: 500px;
+}
+
+.formStack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formField {
+  width: 100%;
+}
+
+.formSelect {
+  width: 100%;
+}
+
+.searchContainer {
+  margin-bottom: 20px;
+}
+
+.searchField {
+  width: 100%;
+}
+
+.productsTableContainer {
+  max-height: 300px;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  overflow: auto;
+  border: 1px solid #e0e0e0;
+}
+
+.productsTable {
+  min-width: 100%;
+}
+
+.tableHeader {
+  background-color: #f8f9fa;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.tableHeaderCell {
+  font-weight: 600;
+  color: #333;
+  padding: 12px 16px;
+}
+
+.tableCell {
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.tableRow {
+  transition: background-color 0.2s;
+}
+
+.tableRow:hover {
+  background-color: #f5f5f5;
+}
+
+.selectedRow {
+  background-color: rgba(25, 118, 210, 0.08) !important;
+}
+
+.stockChip {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.selectedProductCard {
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.selectedProductInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.selectedProductText {
+  flex: 1;
+}
+
+.selectedProductName {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.selectedProductDetails {
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.selectedProductChip {
+  flex-shrink: 0;
+}
+
+.restockControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.quantityField {
+  width: 200px;
+}
+
+.restockButton {
+  min-width: 160px;
+}
+
+.updateButton {
+  margin-left: auto;
+}
+
+.restockInfo {
+  margin-top: 12px;
+  color: #666;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.reportControls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  align-items: center;
+}
+
+.reportSelect {
+  min-width: 150px;
+}
+
+.reportButton {
+  min-width: 180px;
+}
+
+.reportTableContainer {
+  margin-top: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+.reportTable {
+  width: 100%;
+}
+
+.reportEmpty {
+  text-align: center;
+  color: #666;
+  padding: 60px 0;
+  font-size: 1rem;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px;
+}
+
+.subtitle {
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+.helperText {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .adminContainer {
+    padding: 16px;
+  }
+
+  .adminHeader {
+    padding: 20px;
+  }
+
+  .headerContent {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .restockControls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .quantityField {
+    width: 100%;
+  }
+
+  .reportControls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .reportSelect {
+    width: 100%;
+  }
+
+  .reportButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .adminContainer {
+    padding: 12px;
+  }
+
+  .adminHeader {
+    padding: 16px;
+  }
+
+  .adminTitle {
+    font-size: 1.75rem;
+  }
+
+  .cardContent {
+    padding: 20px;
+  }
+
+  .cardTitle {
+    font-size: 1.25rem;
+  }
+
+  .tableCell {
+    padding: 10px 12px;
+  }
+
+  .productsTableContainer {
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .adminContainer {
+    padding: 8px;
+  }
+
+  .adminHeader {
+    padding: 12px;
+  }
+
+  .cardContent {
+    padding: 16px;
+  }
+
+  .selectedProductInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .selectedProductChip {
+    align-self: flex-start;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .adminTitle {
+    color: #fff;
+  }
+
+  .cardTitle {
+    color: #fff;
+  }
+
+  .tableHeader {
+    background-color: #333;
+  }
+
+  .tableHeaderCell {
+    color: #fff;
+  }
+
+  .tableRow:hover {
+    background-color: #444;
+  }
+
+  .selectedProductCard {
+    background-color: #2a2a2a;
+    border-color: #444;
+  }
+
+  .selectedProductDetails {
+    color: #aaa;
+  }
+
+  .helperText {
+    color: #aaa;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.adminCard {
+  animation: fadeIn 0.3s ease;
+}
+
+.productsTableContainer::-webkit-scrollbar,
+.reportTableContainer::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.productsTableContainer::-webkit-scrollbar-track,
+.reportTableContainer::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.productsTableContainer::-webkit-scrollbar-thumb,
+.reportTableContainer::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.productsTableContainer::-webkit-scrollbar-thumb:hover,
+.reportTableContainer::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.formField:focus-within {
+  outline: 2px solid rgba(25, 118, 210, 0.2);
+  outline-offset: 2px;
+}
+
+:global(.MuiCard-root) {
+  border-radius: 12px !important;
+}
+
+:global(.MuiPaper-root) {
+  border-radius: 12px !important;
+}
+
+:global(.MuiButton-containedPrimary) {
+  font-weight: 500 !important;
+  text-transform: none !important;
+}
+
+:global(.MuiButton-outlined) {
+  text-transform: none !important;
+}

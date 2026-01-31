@@ -1,0 +1,130 @@
+.loginContainer {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.loginTitle {
+  margin-bottom: 24px !important;
+  text-align: center;
+  font-weight: 600;
+}
+
+.loginForm {
+  width: 100%;
+}
+
+.loginForm :global(.MuiTextField-root) {
+  margin: 8px 0 !important;
+  width: 100%;
+}
+
+.loginForm :global(.MuiTextField-root):first-of-type {
+  margin-top: 0 !important;
+}
+
+.loginForm :global(.MuiFormControl-marginNormal) {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.loginForm :global(.MuiOutlinedInput-root) {
+  border-radius: 8px;
+}
+
+.loginForm :global(.MuiInputLabel-root) {
+  font-size: 0.95rem;
+}
+
+.loginForm
+  :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+  border-color: rgba(25, 118, 210, 0.5);
+}
+
+.loginForm
+  :global(.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
+  border-color: #1976d2;
+  border-width: 2px;
+}
+
+.errorMessage {
+  margin: 16px 0 !important;
+  text-align: center;
+}
+
+.submitButton {
+  margin-top: 20px !important;
+  padding: 12px 0 !important;
+  font-weight: 600 !important;
+  width: 100%;
+}
+
+.registerLinkButton {
+  margin-top: 10px !important;
+  width: 100%;
+  text-transform: none !important;
+}
+
+@media (max-width: 600px) {
+  .loginContainer {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .loginTitle {
+    font-size: 1.75rem !important;
+    margin-bottom: 20px !important;
+  }
+
+  .loginForm :global(.MuiTextField-root) {
+    margin: 12px 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .loginContainer {
+    padding: 12px;
+  }
+
+  .loginTitle {
+    font-size: 1.5rem !important;
+    margin-bottom: 16px !important;
+  }
+
+  .submitButton,
+  .registerLinkButton {
+    padding: 10px 0 !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .loginContainer {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+  }
+}
+
+.loginContainer {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.loginForm :global(.Mui-error .MuiOutlinedInput-notchedOutline) {
+  border-color: #f44336;
+}
+
+.loginForm :global(.MuiFormHelperText-root.Mui-error) {
+  color: #f44336;
+  margin-top: 4px;
+}

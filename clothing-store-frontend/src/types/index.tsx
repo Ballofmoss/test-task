@@ -5,7 +5,7 @@ export interface Product {
   price: number;
   color: string;
   size: string;
-  type: number; // 0=свитер, 1=брюки, 2=шорты, 3=футболка, 4=куртка
+  type: number; 
   quantity: number;
   createdAt: string;
 }

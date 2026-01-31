@@ -31,8 +31,8 @@ namespace ClothingStoreAPI.Controllers
             return product;
         }
 
-        // GET: api/products/stock-report?type=Sweater&size=M - Отчет по остаткам
         [HttpGet("stock-report")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<Product>>> GetStockReport(
             [FromQuery] ProductType? type,
             [FromQuery] string? size)
@@ -48,22 +48,17 @@ namespace ClothingStoreAPI.Controllers
             return await query.ToListAsync();
         }
 
-        // POST: api/products - Создать новый товар (только админ)
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Product>> CreateProduct(Product product)
-        {   
-            if (!User.IsInRole("Admin"))
-            {
-                return Forbid();
-            }
+        {
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
 
-        // PUT: api/products/5/restock - Пополнить склад
         [HttpPut("{id}/restock")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> RestockProduct(int id, [FromBody] int quantity)
         {
             var product = await _context.Products.FindAsync(id);
@@ -75,8 +70,8 @@ namespace ClothingStoreAPI.Controllers
             return NoContent();
         }
 
-        // PUT: api/products/5 - Обновить товар
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateProduct(int id, Product product)
         {
             if (id != product.Id) return BadRequest();
@@ -87,8 +82,8 @@ namespace ClothingStoreAPI.Controllers
             return NoContent();
         }
 
-        // DELETE: api/products/5 - Удалить товар
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _context.Products.FindAsync(id);
@@ -98,6 +93,20 @@ namespace ClothingStoreAPI.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpGet("types")]
+        public ActionResult<IEnumerable<string>> GetProductTypes()
+        {
+            var types = Enum.GetNames(typeof(ProductType));
+            return Ok(types);
+        }
+
+        [HttpGet("sizes")]
+        public ActionResult<IEnumerable<string>> GetProductSizes()
+        {
+            var sizes = new[] { "XS", "S", "M", "L", "XL" };
+            return Ok(sizes);
         }
     }
 }

@@ -10,20 +10,48 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { IconButton } from "@mui/material";
 import { Brightness4, Brightness7 } from "@mui/icons-material";
 
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import Home from "./pages/Home";
-import Cart from "./components/Cart";
-import AdminPanel from "./components/AdminPanel";
-import Login from "./pages/Login";
-import AdminPage from "./pages/AdminPage";
-import Register from "./pages/Register";
+import Cart from "./components/Cart/Cart";
+import AdminPanel from "./components/AdminPanel/AdminPanel";
+import Login from "./pages/Login/Login";
+import AdminPage from "./pages/AdminPage/AdminPage";
+import Register from "./pages/Register/Register";
 import type { User } from "./types";
+import ProductList from "./components/ProductList/ProductList";
+
+const AdminRoute: React.FC<{
+  user: User | null;
+  children: React.ReactNode;
+}> = ({ user, children }) => {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setReady(true), 150);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (!ready) return null;
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+
+
+  const isAdmin = user.role == 1 || user.role == "1" || user.role == "Admin";
+  console.log(isAdmin);
+
+  if (!isAdmin) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <>{children}</>;
+};
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const [darkMode, setDarkMode] = useState(false);
 
-  // Загружаем пользователя из localStorage при запуске
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
@@ -81,7 +109,7 @@ function App() {
             </div>
 
             <Routes>
-              <Route path="/" element={<Home userId={user?.id} />} />
+              <Route path="/" element={<ProductList user={user} />} />
               <Route
                 path="/login"
                 element={
@@ -104,18 +132,13 @@ function App() {
                   user ? <Cart userId={user.id} /> : <Navigate to="/login" />
                 }
               />
-              {/* <Route
-                path="/admin"
-                element={
-                  user?.role === "Admin" ? <AdminPanel /> : <Navigate to="/" />
-                }
-              /> */}
+              <Route />
               <Route
                 path="/admin"
                 element={
-                  // Проверяем, что пользователь авторизован и админ
-                  // user?.role === "1" ?  : <Navigate to="/login" />
-                  <AdminPage />
+                  <AdminRoute user={user}>
+                    <AdminPage />
+                  </AdminRoute>
                 }
               />
             </Routes>

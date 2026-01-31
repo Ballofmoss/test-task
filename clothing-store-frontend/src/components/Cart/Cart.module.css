@@ -1,0 +1,164 @@
+.cartContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.cartTitle {
+  margin-bottom: 24px;
+}
+
+.emptyCartContainer {
+  padding: 32px;
+  text-align: center;
+  max-width: 500px;
+  margin: 32px auto 0;
+}
+
+.emptyCartTitle {
+  margin-bottom: 16px;
+}
+
+.emptyCartText {
+  color: var(--text-secondary-color, #666);
+}
+
+.cartItemsList {
+  margin-bottom: 24px;
+}
+
+.cartItem {
+  position: relative;
+}
+
+.removeButton {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.productInfo {
+  flex-grow: 1;
+}
+
+.productName {
+  margin-bottom: 8px;
+}
+
+.productDetails {
+  margin-bottom: 8px;
+  color: var(--text-secondary-color, #666);
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.quantityStack {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quantityDisplay {
+  min-width: 30px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.itemTotal {
+  font-weight: bold;
+}
+
+.checkoutContainer {
+  padding: 24px;
+}
+
+.checkoutSummary {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.summaryLeft {
+  display: flex;
+  flex-direction: column;
+}
+
+.totalItems {
+  margin-bottom: 4px;
+}
+
+.itemsCount {
+  color: var(--text-secondary-color, #666);
+}
+
+.totalPrice {
+  color: var(--primary-color, #1976d2);
+}
+
+.checkoutButton {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.loadingText {
+  margin-left: 16px;
+}
+
+@media (max-width: 768px) {
+  .cartContainer {
+    padding: 16px;
+  }
+
+  .quantityControls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .checkoutSummary {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .emptyCartContainer {
+    padding: 24px 16px;
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cartContainer {
+    padding: 12px;
+  }
+
+  .cartTitle {
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+  }
+
+  .productName {
+    font-size: 1.1rem;
+  }
+
+  .checkoutContainer {
+    padding: 16px;
+  }
+}
+
+:global(.dark-theme) {
+  --text-secondary-color: #aaa;
+  --primary-color: #90caf9;
+}

@@ -1,0 +1,113 @@
+.registerContainer {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.registerTitle {
+  margin-bottom: 24px !important;
+  text-align: center;
+}
+
+.registerForm {
+  width: 100%;
+}
+
+.formField {
+  margin: 8px 0 !important;
+}
+
+.formField:first-of-type {
+  margin-top: 0;
+}
+
+.errorMessage {
+  margin: 16px 0;
+  text-align: center;
+}
+
+.submitButton {
+  margin-top: 20px !important;
+  padding: 12px 0 !important;
+  font-weight: 600 !important;
+}
+
+.loginLinkButton {
+  margin-top: 10px !important;
+  width: 100%;
+  text-transform: none !important;
+}
+
+@media (max-width: 600px) {
+  .registerContainer {
+    padding: 16px;
+    max-width: 100%;
+  }
+
+  .registerTitle {
+    font-size: 1.75rem;
+    margin-bottom: 20px;
+  }
+
+  .formField {
+    margin: 12px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .registerContainer {
+    padding: 12px;
+  }
+
+  .registerTitle {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+  }
+
+  .submitButton,
+  .loginLinkButton {
+    padding: 10px 0 !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .registerContainer {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+  }
+}
+
+.registerContainer {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.formField :global(.MuiOutlinedInput-root) {
+  border-radius: 8px;
+}
+
+.formField :global(.MuiInputLabel-root) {
+  font-size: 0.95rem;
+}
+
+.formField
+  :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+  border-color: rgba(25, 118, 210, 0.5);
+}
+
+.formField
+  :global(.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline) {
+  border-color: #1976d2;
+  border-width: 2px;
+}
