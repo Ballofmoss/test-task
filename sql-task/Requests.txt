@@ -1,0 +1,32 @@
+-- Запрос продажи автомобиля
+START TRANSACTION;
+
+UPDATE Car_Instance
+SET is_sold = TRUE
+WHERE instance_id = 123 AND is_sold = FALSE; 
+INSERT INTO Sale (instance_id, client_id, employee_id, sale_date, sale_price, payment_type)
+VALUES (123, 456, 789, CURDATE(), 2500000.00, 'Кредит');
+COMMIT;
+
+-- Вопрос 1
+SELECT
+    COUNT(*) AS total_sold
+FROM
+    Sale s
+    INNER JOIN Car_Instance ci ON s.instance_id = ci.instance_id
+    INNER JOIN Car c ON ci.car_id = c.car_id
+WHERE
+    c.brand = 'Mazda'
+    AND c.drive_type = 'полный';
+
+-- Вопрос 5
+
+SELECT
+    COUNT(*) AS sold_on_credit_domestic
+FROM
+    Sale s
+    INNER JOIN Car_Instance ci ON s.instance_id = ci.instance_id
+    INNER JOIN Car c ON ci.car_id = c.car_id
+WHERE
+    c.country_of_origin = 'Россия'
+    AND s.payment_type = 'Кредит';

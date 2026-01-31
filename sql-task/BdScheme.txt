@@ -1,0 +1,40 @@
+1.  Car (Автомобиль - общая информация о модели)
+    - car_id (PK)
+    - brand (бренд, напр., Mazda)
+    - model (модель)
+    - engine_volume (объем двигателя, decimal)
+    - drive_type (тип привода, напр., полный, передний)
+    - country_of_origin (страна производства, напр., 'Япония', 'Россия')
+    - purchase_price (закупочная цена, decimal)
+
+2.  Car_Instance (Экземпляр автомобиля - конкретная единица на складе)
+    - instance_id (PK)
+    - car_id (FK to Car.car_id)
+    - vin (уникальный VIN номер)
+    - color (цвет)
+    - year_of_manufacture (год выпуска)
+    - arrival_date (дата поступления в салон)
+    - is_sold (флаг продан/не продан, boolean, default FALSE)
+
+3.  Client (Клиент)
+    - client_id (PK)
+    - first_name
+    - last_name
+    - passport_series_number
+    - phone_number
+
+4.  Employee (Сотрудник, менеджер)
+    - employee_id (PK)
+    - first_name (например, 'Иван')
+    - last_name (например, 'Иванов')
+    - position (должность)
+    - commission_rate (процент комиссии, decimal, напр., 15.00)
+
+5.  Sale (Сделка о продаже)
+    - sale_id (PK)
+    - instance_id (FK to Car_Instance.instance_id, UNIQUE) -- Гарантия продажи 1 раз
+    - client_id (FK to Client.client_id)
+    - employee_id (FK to Employee.employee_id)
+    - sale_date (дата продажи)
+    - sale_price (цена продажи, decimal)
+    - payment_type (тип оплаты: 'Наличные', 'Кредит', 'Рассрочка')
