@@ -16,7 +16,7 @@ namespace ClothingStoreAPI.Controllers
             _context = context;
         }
 
-        // POST: api/orders - Создать заказ из корзины
+
         [HttpPost]
         public async Task<ActionResult<Order>> CreateOrder(int userId)
         {
@@ -24,7 +24,6 @@ namespace ClothingStoreAPI.Controllers
 
             try
             {
-                // Получаем корзину пользователя
                 var cartItems = await _context.CartItems
                     .Include(c => c.Product)
                     .Where(c => c.UserId == userId)
@@ -33,17 +32,14 @@ namespace ClothingStoreAPI.Controllers
                 if (!cartItems.Any())
                     return BadRequest("Корзина пуста");
 
-                // Проверяем наличие всех товаров
                 foreach (var item in cartItems)
                 {
                     if (item.Product.Quantity < item.Quantity)
                         return BadRequest($"Недостаточно товара: {item.Product.Name}");
                 }
 
-                // Рассчитываем общую сумму
                 var totalAmount = cartItems.Sum(item => item.Product.Price * item.Quantity);
 
-                // Создаем заказ
                 var order = new Order
                 {
                     UserId = userId,
@@ -54,13 +50,11 @@ namespace ClothingStoreAPI.Controllers
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
 
-                // Уменьшаем количество товаров на складе
                 foreach (var item in cartItems)
                 {
                     item.Product.Quantity -= item.Quantity;
                 }
 
-                // Пополняем баланс магазина
                 var storeBalance = new StoreBalance
                 {
                     Balance = totalAmount,
@@ -70,7 +64,6 @@ namespace ClothingStoreAPI.Controllers
 
                 _context.StoreBalances.Add(storeBalance);
 
-                // Очищаем корзину
                 _context.CartItems.RemoveRange(cartItems);
 
                 await _context.SaveChangesAsync();
@@ -85,7 +78,6 @@ namespace ClothingStoreAPI.Controllers
             }
         }
 
-        // GET: api/orders/user/5 - Получить заказы пользователя
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<Order>>> GetUserOrders(int userId)
         {
@@ -94,7 +86,6 @@ namespace ClothingStoreAPI.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/orders/5 - Получить заказ по ID
         [HttpGet("{id}")]
         public async Task<ActionResult<Order>> GetOrder(int id)
         {

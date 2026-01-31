@@ -22,11 +22,9 @@ namespace ClothingStoreAPI.Controllers
             _configuration = configuration;
         }
 
-        // POST: api/auth/register
         [HttpPost("register")]
         public async Task<ActionResult<User>> Register(User user)
         {
-            // Хэшируем пароль (в реальном приложении используйте BCrypt)
             user.PasswordHash = HashPassword(user.PasswordHash);
 
             _context.Users.Add(user);
@@ -35,7 +33,6 @@ namespace ClothingStoreAPI.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
-        // POST: api/auth/login
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login(LoginRequest request)
         {
@@ -75,7 +72,6 @@ namespace ClothingStoreAPI.Controllers
 
         private string HashPassword(string password)
         {
-            // Простая хэш-функция для примера
             using var sha256 = System.Security.Cryptography.SHA256.Create();
             var bytes = Encoding.UTF8.GetBytes(password);
             var hash = sha256.ComputeHash(bytes);
@@ -87,7 +83,6 @@ namespace ClothingStoreAPI.Controllers
             return HashPassword(password) == storedHash;
         }
 
-        // GET: api/auth/user/5
         [HttpGet("user/{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
