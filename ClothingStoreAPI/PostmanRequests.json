@@ -1,0 +1,430 @@
+{
+  "info": {
+    "name": "Clothing Store API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"passwordHash\": \"password123\",\n  \"role\": 0\n}"
+            },
+            "url": "http://localhost:5273/api/Auth/register",
+            "description": "Регистрация нового пользователя. PasswordHash передается как пароль в открытом виде (хэшируется на сервере)"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": "http://localhost:5273/api/Auth/login",
+            "description": "Авторизация пользователя. Сохраните токен в переменные окружения для последующих запросов"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();",
+                  "if (response.token) {",
+                  "    pm.environment.set('auth_token', response.token);",
+                  "    pm.environment.set('current_user_id', response.user.id);",
+                  "    console.log('Token saved:', response.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "response": []
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": "http://localhost:5273/api/Auth/user/{{current_user_id}}",
+            "description": "Получение информации о пользователе по ID"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:5273/api/Products",
+            "description": "Получение списка всех товаров"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:5273/api/Products/1",
+            "description": "Получение информации о конкретном товаре"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:5273/api/Products/types",
+            "description": "Получение доступных типов товаров"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Product Sizes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "http://localhost:5273/api/Products/sizes",
+            "description": "Получение доступных размеров товаров"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Product (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Blue Jeans\",\n  \"barcode\": \"123456789012\",\n  \"price\": 49.99,\n  \"color\": \"Blue\",\n  \"size\": \"M\",\n  \"type\": 1,\n  \"quantity\": 100\n}"
+            },
+            "url": "http://localhost:5273/api/Products",
+            "description": "Создание нового товара (только для администраторов)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Stock Report (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": "http://localhost:5273/api/Products/stock-report?type=1&size=M",
+            "description": "Получение отчета по остаткам с фильтрацией (только для администраторов)"
+          },
+          "response": []
+        },
+        {
+          "name": "Restock Product (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "50"
+            },
+            "url": "http://localhost:5273/api/Products/1/restock",
+            "description": "Пополнение запасов товара (только для администраторов)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"name\": \"Updated Product Name\",\n  \"barcode\": \"123456789012\",\n  \"price\": 59.99,\n  \"color\": \"Red\",\n  \"size\": \"L\",\n  \"type\": 1,\n  \"quantity\": 150\n}"
+            },
+            "url": "http://localhost:5273/api/Products/1",
+            "description": "Обновление информации о товаре (только для администраторов)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": "http://localhost:5273/api/Products/1",
+            "description": "Удаление товара (только для администраторов)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Get User Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": "http://localhost:5273/api/Cart/user/{{current_user_id}}",
+            "description": "Получение содержимого корзины пользователя"
+          },
+          "response": []
+        },
+        {
+          "name": "Add to Cart (Detailed)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{current_user_id}},\n  \"productId\": 1,\n  \"quantity\": 2\n}"
+            },
+            "url": "http://localhost:5273/api/Cart",
+            "description": "Добавление товара в корзину с проверкой доступности"
+          },
+          "response": []
+        },
+        {
+          "name": "Add to Cart Simple",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": {{current_user_id}},\n  \"productId\": 2,\n  \"quantity\": 1\n}"
+            },
+            "url": "http://localhost:5273/api/Cart/simple",
+            "description": "Упрощенное добавление товара в корзину"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 3\n}"
+            },
+            "url": "http://localhost:5273/api/Cart/1",
+            "description": "Обновление количества товара в корзине"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Cart Item Quantity",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "2"
+            },
+            "url": "http://localhost:5273/api/Cart/1/quantity",
+            "description": "Обновление только количества товара"
+          },
+          "response": []
+        },
+        {
+          "name": "Remove from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": "http://localhost:5273/api/Cart/1",
+            "description": "Удаление товара из корзины"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:5273/api/Orders?userId={{current_user_id}}",
+              "host": ["http://localhost:5273"],
+              "path": ["api", "Orders"],
+              "query": [
+                {
+                  "key": "userId",
+                  "value": "{{current_user_id}}"
+                }
+              ]
+            },
+            "description": "Создание заказа из содержимого корзины пользователя"
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": "http://localhost:5273/api/Orders/user/{{current_user_id}}",
+            "description": "Получение списка заказов пользователя"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Order by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{auth_token}}"
+              }
+            ],
+            "url": "http://localhost:5273/api/Orders/1",
+            "description": "Получение информации о конкретном заказе"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "auth_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "current_user_id",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
